@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace SimulatedWindTurbine
 {
     class Program
     {
-        private const string IOTHUB_URI = "[Replace your IoT Hub URI]";//"iothub112101.azure-devices.net"
 #if true // Windows
         private const string DEVICEKEY = "[Replace your key of device]";//"38MIwkw8qGFzHRKBjjjRI36KziAYg+q4wOtLZoKx3Gs="
         private const string DEVICENAME = "WinTurbine";// It shoud be fixed in this workshop
@@ -25,8 +25,10 @@ namespace SimulatedWindTurbine
 
         static void Main(string[] args)
         {
+            string iotHubUri = ConfigurationManager.AppSettings["IOTHUB_URI"];
+
             Console.WriteLine("Simulated Wind Turbine\n");
-            _deviceClient = DeviceClient.Create(IOTHUB_URI, new DeviceAuthenticationWithRegistrySymmetricKey(DEVICENAME, DEVICEKEY));
+            _deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(DEVICENAME, DEVICEKEY));
 
             SendWindTurbineMessageAsync();
 

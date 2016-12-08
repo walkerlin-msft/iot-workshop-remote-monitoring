@@ -13,22 +13,27 @@ namespace RefBlobConsoleApp
 {
     class Program
     {
-        /* Please replace the following as your AccountName and AccountKey of Storage Account */
-        private const string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=iotworkshopsa112101;AccountKey=WLVBbrurJbmw05TyBtd9vzyE3OCM7zt5H3onzoSFyVDUmgb8/Df9wQcPEpVDR5UhaiktiZ6uDFI53jfozaf1+A==";
-
+        private const string STORAGEACCOUNT_PROTOCOL = "https";// We use HTTPS to access the storage account
         private const double CUTOUTSPEED = 14f;
         private const double REPAIR = 0.5f;
-        private const string CONTAINER_NAME = "devicerules";
-        private const string BLOB_NAME = "devicerules.json";
 
-        private const string DEVICEID_WINDOWS_TURBINE = "WinTurbine";
-        private const string DEVICEID_LINUX_TURBINE = "LinuxTurbine";
+        private const string CONTAINER_NAME = "devicerules";// It's hard-coded for this workshop
+        private const string BLOB_NAME = "devicerules.json";// It's hard-coded for this workshop
+        private const string DEVICEID_WINDOWS_TURBINE = "WinTurbine";// It's hard-coded for this workshop
+        private const string DEVICEID_LINUX_TURBINE = "LinuxTurbine";// It's hard-coded for this workshop
 
         static void Main(string[] args)
-        {            
-            Console.WriteLine("StorageConnectionString={0}", ConnectionString);
+        {
+            Console.WriteLine("Console App for creating the reference blob...\n");
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
+            /* Load the settings from App.config */
+            string storageAccountName = ConfigurationManager.AppSettings["StorageAccountName"];
+            string storageAccountKey = ConfigurationManager.AppSettings["StorageAccountKey"];
+
+            string connectionString = CombineConnectionString(storageAccountName, storageAccountKey);
+            Console.WriteLine("connectionString={0}\n", connectionString);
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
 
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
@@ -38,22 +43,31 @@ namespace RefBlobConsoleApp
             // Create the container if it doesn't already exist.
             container.CreateIfNotExists();
 
-            listAllblobs(blobClient, CONTAINER_NAME, true);
+            // List all blobs of this container
+            ListAllblobs(blobClient, CONTAINER_NAME, true);
 
-            uploadBlob(container, getBlobFileName());
-
+            // Create and upload the blob
+            CreateAndUploadBlob(container, GetBlobFileName());
+            
             Console.ReadLine();
 
         }
 
-        private static void listAllblobs(CloudBlobClient blobClient, string containerName, Boolean useFlatBlobListing)
+        private static string CombineConnectionString(string storageAccountName, string storageAccountKey)
+        {
+            return "DefaultEndpointsProtocol=" + STORAGEACCOUNT_PROTOCOL + ";" +
+                "AccountName=" + storageAccountName + ";" +
+                "AccountKey=" + storageAccountKey;
+        }
+
+        private static void ListAllblobs(CloudBlobClient blobClient, string containerName, Boolean useFlatBlobListing)
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobClient.GetContainerReference(containerName);
 
             if (container.ListBlobs(null, false).Count() == 0)
             {
-                Console.WriteLine("No any blob was found in {0}", containerName);
+                Console.WriteLine("No any blob was found in {0}\n", containerName);
             }
 
             // Loop over items within the container and output the length and URI.
@@ -63,38 +77,41 @@ namespace RefBlobConsoleApp
                 {
                     CloudBlockBlob blob = (CloudBlockBlob)item;
 
-                    Console.WriteLine("Block blob of length {0}: {1}", blob.Properties.Length, blob.Uri);
+                    Console.WriteLine("Block blob of length {0}: {1}\n", blob.Properties.Length, blob.Uri);
 
                 }
                 else if (item.GetType() == typeof(CloudPageBlob))
                 {
                     CloudPageBlob pageBlob = (CloudPageBlob)item;
 
-                    Console.WriteLine("Page blob of length {0}: {1}", pageBlob.Properties.Length, pageBlob.Uri);
+                    Console.WriteLine("Page blob of length {0}: {1}\n", pageBlob.Properties.Length, pageBlob.Uri);
 
                 }
                 else if (item.GetType() == typeof(CloudBlobDirectory))
                 {
                     CloudBlobDirectory directory = (CloudBlobDirectory)item;
 
-                    Console.WriteLine("Directory: {0}", directory.Uri);
+                    Console.WriteLine("Directory: {0}\n", directory.Uri);
                 }
             }
         }
 
-        private static void uploadBlob(CloudBlobContainer container, string blobName)
+        private static void CreateAndUploadBlob(CloudBlobContainer container, string blobName)
         {
-            Console.WriteLine("container={0}, blobName={1}", container.Name, blobName);
-            // Retrieve reference to a blob named "myblob".
+            Console.WriteLine("container={0}, blobName={1}\n", container.Name, blobName);
+            // Retrieve reference to a blob named
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
-            String blobContent = createDeviceRules();
-            Console.WriteLine("blobContent={0}", blobContent);
+
+            // Create the device rules for the content of blob
+            String blobContent = CreateDeviceRules();
+            Console.WriteLine("blobContent={0}\n", blobContent);
 
             byte[] content = ASCIIEncoding.ASCII.GetBytes(blobContent);
             blockBlob.UploadFromByteArrayAsync(content, 0, content.Count()).Wait();
-            Console.WriteLine("upload successful content.Count()={0}", content.Count());
+            Console.WriteLine("upload successful content.Count()={0}\n", content.Count());
         }
-        private static String createDeviceRules()
+
+        private static String CreateDeviceRules()
         {
             DeviceRule deviceRule1 = new DeviceRule();
             deviceRule1.DeviceID = DEVICEID_LINUX_TURBINE;
@@ -139,7 +156,7 @@ namespace RefBlobConsoleApp
         private const int blobSaveSecondsInTheFuture = 20;
         private static DateTimeFormatInfo _formatInfo;
 
-        private static string getBlobFileName()
+        private static string GetBlobFileName()
         {
             // note: InvariantCulture is read-only, so use en-US and hardcode all relevant aspects
             CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");

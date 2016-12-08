@@ -17,7 +17,7 @@ namespace TelemetryEPHostConsoleApp
 
         public string PostTelemetryMessage(TelemetryMessage telemetryMessage)
         {
-            string _realTimeDataFeedInURI = Program.WEBSERVER_URL;
+            string _realTimeDataFeedInURI = Program._webServerUrl;
 
             try
             {

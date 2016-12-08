@@ -1,30 +1,39 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 
 namespace TelemetryEPHostConsoleApp
 {
     class Program
     {
-        /* Please check your URL of web server */
-#if true // Local Host
-        public const string WEBSERVER_URL = "http://localhost:13526/Telemetry/PutTelemetry";
-#else   // Production Site
-        public const string WEBSERVER_URL = "http://iotworkshop20161118.azurewebsites.net/Telemetry/PutTelemetry";
-#endif  
+        private const string STORAGEACCOUNT_PROTOCOL = "https";// We use HTTPS to access the storage account
+        public static string _webServerUrl { get; set; }
 
         static void Main(string[] args)
         {
-            // IoT Hub
-            string eventHubConnectionString = "[Please replace the connection string of IoT Hub]";// "HostName=iothub112101.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=9plxivts9llrJWJaAakiU2wT8uvAvGrCr1MyiJXjlro=";
-            string eventHubPath = "messages/events";
-            string consumerGroupName = "telemetrypush";// It should be fixed for this workshop
+            Console.WriteLine("Console App for Telemetry Event Processor Host...\n");
 
-            /* Please replace the AccountName and AccountKey of your Storage Account */
-            string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=iotworkshopsa112101;AccountKey=WLVBbrurJbmw05TyBtd9vzyE3OCM7zt5H3onzoSFyVDUmgb8/Df9wQcPEpVDR5UhaiktiZ6uDFI53jfozaf1+A==";
+            /* Load the settings from App.config */
+            string isProduction = ConfigurationManager.AppSettings["WebServer.isProduction"];
+            if(isProduction.Equals("1"))
+                _webServerUrl = ConfigurationManager.AppSettings["WebServer.Production"];
+            else
+                _webServerUrl = ConfigurationManager.AppSettings["WebServer.Localhost"];
+
+            Console.WriteLine("_webServerUrl={0}\n", _webServerUrl);
+
+            // IoT Hub
+            string iotHubConnectionString = ConfigurationManager.AppSettings["IoTHub.ConnectionString"];
+            Console.WriteLine("iotHubConnectionString={0}\n", iotHubConnectionString);
+
+            string eventHubPath = "messages/events";// It's hard-coded for IoT Hub
+            string consumerGroupName = "telemetrypush";// It's hard-coded for this workshop
+
+            // Storage Account
+            string storageAccountName = ConfigurationManager.AppSettings["StorageAccount.Name"];
+            string storageAccountKey = ConfigurationManager.AppSettings["StorageAccount.Key"];
+            string storageAccountConnectionString = CombineConnectionString(storageAccountName, storageAccountKey);
+            Console.WriteLine("storageAccountConnectionString={0}\n", storageAccountConnectionString);
 
             string eventProcessorHostName = Guid.NewGuid().ToString();
             string leaseName = eventProcessorHostName;
@@ -32,9 +41,9 @@ namespace TelemetryEPHostConsoleApp
             EventProcessorHost eventProcessorHost = new EventProcessorHost(
                 eventProcessorHostName,
                 eventHubPath,
-                consumerGroupName, 
-                eventHubConnectionString,
-                storageConnectionString,
+                consumerGroupName,
+                iotHubConnectionString,
+                storageAccountConnectionString,
                 leaseName);
 
             Console.WriteLine("Registering EventProcessor...");
@@ -49,6 +58,14 @@ namespace TelemetryEPHostConsoleApp
             Console.WriteLine("Receiving. Press enter key to stop worker.");
             Console.ReadLine();
             eventProcessorHost.UnregisterEventProcessorAsync().Wait();
+
+        }
+
+        private static string CombineConnectionString(string storageAccountName, string storageAccountKey)
+        {
+            return "DefaultEndpointsProtocol=" + STORAGEACCOUNT_PROTOCOL + ";" +
+                "AccountName=" + storageAccountName + ";" +
+                "AccountKey=" + storageAccountKey;
         }
     }
 }

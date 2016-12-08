@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Client;
@@ -11,37 +9,45 @@ namespace SimulatedWindTurbine
 {
     class Program
     {
-#if true // Windows
-        private const string DEVICEKEY = "[Replace your key of device]";//"38MIwkw8qGFzHRKBjjjRI36KziAYg+q4wOtLZoKx3Gs="
-        private const string DEVICENAME = "WinTurbine";// It shoud be fixed in this workshop
-#else // Linux
-        private const string DEVICEKEY = "wZOnZLbP0guAUPIZpg2pz3OHKMlWzFdCzTP9tbM2rrc=";
-        private const string DEVICENAME = "LinuxTurbine";
-#endif
-
-        private static double _currentDepreciation = 1f; // 100%
+        private const string DEVICENAME = "WinTurbine";// It's hard-coded for this workshop
         private static DeviceClient _deviceClient;
         private static bool _isStopped = false;
 
         static void Main(string[] args)
         {
-            string iotHubUri = ConfigurationManager.AppSettings["IOTHUB_URI"];
-
             Console.WriteLine("Simulated Wind Turbine\n");
-            _deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(DEVICENAME, DEVICEKEY));
 
-            SendWindTurbineMessageAsync();
+            /* Load the settings from App.config */
+            string iotHubConnectionString = ConfigurationManager.AppSettings["IoTHubConnectionString"];
+            Console.WriteLine("iotHubUri={0}\n", iotHubConnectionString);
 
-            ReceiveC2dAsync();
+            try
+            {
+                /* Create the DeviceClient instance */
+                _deviceClient = DeviceClient.CreateFromConnectionString(iotHubConnectionString, DEVICENAME, TransportType.Amqp);
 
+                /* Task for the message sending */
+                SendWindTurbineMessageToCloudAsync();
+
+                /* Task for the message receiving */
+                ReceiveCloudToDeviceMessageAsync();
+            } catch (FormatException ex)
+            {
+                Console.WriteLine("Please make sure you have pasted the correct connection string of IoT Hub!!\n\n FormatException={0}", ex.ToString());
+            }
+
+
+            /* Wait for any key to terminate the console App */
             Console.ReadLine();
         }
 
         const double MAXIMUM_DEPRECIATION = 1;
         const double MINIMUM_DEPRECIATION = 0.3;
         const double DEPRECIATION_RATE = 0.01;
-        private static async void SendWindTurbineMessageAsync()
+        private static double _currentDepreciation { get; set; }
+        private static async void SendWindTurbineMessageToCloudAsync()
         {
+            _currentDepreciation = MAXIMUM_DEPRECIATION; // 100%
             int minWindSpeed = 2; // m/s
             Random rand = new Random();
 
@@ -51,8 +57,8 @@ namespace SimulatedWindTurbine
                 if(_isStopped == false)
                 {
                     int currentWindSpeed = minWindSpeed + (rand.Next() % 19);// 2~20
-                    _currentDepreciation = GetNewDepreciation(i);
-                    double currentWindPower = getWindPower(currentWindSpeed, _currentDepreciation);
+                    CalculateNewDepreciation(i);
+                    double currentWindPower = GetWindPower(currentWindSpeed, _currentDepreciation);
 
                     var telemetryDataPoint = new
                     {
@@ -80,7 +86,7 @@ namespace SimulatedWindTurbine
         }
 
         /* Simulate the real wind power */
-        private static double getWindPower(int speed, double depreciation)
+        private static double GetWindPower(int speed, double depreciation)
         {
             if (speed <= 3)
                 return 0;
@@ -94,21 +100,18 @@ namespace SimulatedWindTurbine
                 return 1000 * depreciation;
         }
 
-        private static int _depreciationCount = 0;
-        private static double GetNewDepreciation(int i)
+        private static void CalculateNewDepreciation(int i)
         {
             if (i % 5 == 0)
-                _depreciationCount++;
+            {
+                _currentDepreciation -= DEPRECIATION_RATE;
+            }
 
-            double depreciation = MAXIMUM_DEPRECIATION - (_depreciationCount * DEPRECIATION_RATE);
-
-            if (depreciation < MINIMUM_DEPRECIATION)
-                depreciation = MINIMUM_DEPRECIATION;
-
-            return depreciation;
+            if (_currentDepreciation < MINIMUM_DEPRECIATION)
+                _currentDepreciation = MINIMUM_DEPRECIATION;
         }
 
-        private static async void ReceiveC2dAsync()
+        private static async void ReceiveCloudToDeviceMessageAsync()
         {
             Console.WriteLine("\nReceiving cloud to device messages from service");
             while (true)
@@ -119,36 +122,35 @@ namespace SimulatedWindTurbine
                 string msg = Encoding.ASCII.GetString(receivedMessage.GetBytes());
                 C2DCommand c2dCommand = JsonConvert.DeserializeObject<C2DCommand>(msg);
 
-                processCommand(c2dCommand);
+                ProcessCommand(c2dCommand);
 
                 await _deviceClient.CompleteAsync(receivedMessage);
             }
         }    
         
-        private static void processCommand(C2DCommand c2dCommand)
+        private static void ProcessCommand(C2DCommand c2dCommand)
         {
             switch(c2dCommand.command)
             {
                 case C2DCommand.COMMAND_CUTOUT_SPEED_WARNING:
-                    showReceivedCommand(c2dCommand, ConsoleColor.Yellow);
+                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Yellow);
                     break;
                 case C2DCommand.COMMAND_REPAIR_WARNING:
-                    showReceivedCommand(c2dCommand, ConsoleColor.Red);
+                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Red);
                     break;
                 case C2DCommand.COMMAND_TURN_ONOFF:
-                    showReceivedCommand(c2dCommand, ConsoleColor.Green);
+                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Green);
                     _isStopped = c2dCommand.value.Equals("0"); // 0 means turn the machine off, otherwise is turning on.
                     break;
                 case C2DCommand.COMMAND_RESET_DEPRECIATION:
-                    showReceivedCommand(c2dCommand, ConsoleColor.Cyan);
+                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Cyan);
                     try
                     {
                         _currentDepreciation = Convert.ToDouble(c2dCommand.value);
-                        _depreciationCount = 0;
                     }
                     catch(Exception ex)
                     {
-                        Console.WriteLine("Unable to convert '{0}' to a Double.", c2dCommand.value);
+                        Console.WriteLine("Unable to convert '{0}' to a Double. \n\nException={1}", c2dCommand.value, ex.ToString());
                     }
                     
                     break;
@@ -159,7 +161,7 @@ namespace SimulatedWindTurbine
             
         }    
 
-        private static void showReceivedCommand(C2DCommand c2dCommand, ConsoleColor color)
+        private static void DisplayReceivedCommand(C2DCommand c2dCommand, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine("Received message: {0}, {1}, {2}\n", c2dCommand.command, c2dCommand.value, c2dCommand.time);

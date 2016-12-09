@@ -8,54 +8,7 @@
     </ol>
 }
 <div class="side-body padding-top">
-    <div class="col-md-9">
         @Html.PowerBIReportFor(m => m.Report, new { id = "pbi-report", style = "height:85vh", powerbi_access_token = Model.AccessToken })
-    </div>
-    <div class="col-md-3">
-        <h3>Page Navigation</h3>
-        <div>
-            <button id="pbi-prev-page" class="btn btn-default">Previous Page</button>
-            <button id="pbi-next-page" class="btn btn-default">Next Page</button>
-        </div>
-        <h3>Settings</h3>
-        <div>
-            <div class="checkbox">
-                <label>
-                    <input id="setting-shownav" type="checkbox" checked="checked" /> Show Navigation
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input id="setting-showfilterpane" type="checkbox" /> Show Filter Pane
-                </label>
-            </div>
-        </div>
-        <h3>Filters</h3>
-        <button id="filter-clear" type="button" class="btn btn-danger">Clear All Filters</button>
-        <h4>Add Filter</h4>
-        <form id="filter-form">
-            <div class="form-group">
-                <label for="filter-target">Target</label>
-                <select id="filter-target" class="form-control">
-                    <option value="report">Report</option>
-                    <option value="page">Page</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="filter-table">Table</label>
-                <input type="text" class="form-control" id="filter-table" />
-            </div>
-            <div class="form-group">
-                <label for="filter-column">Column / Measure</label>
-                <input type="text" class="form-control" id="filter-column" />
-            </div>
-            <div class="form-group">
-                <label for="filter-value">Value</label>
-                <input type="text" class="form-control" id="filter-value" />
-            </div>
-            <button id="filter-add" type="button" class="btn btn-success">Add Filter</button>
-        </form>
-    </div>
 </div>
 
 @section PageScripts {

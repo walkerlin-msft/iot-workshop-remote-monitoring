@@ -1,172 +1,274 @@
 ﻿@section Breadcrumbs{
     <ol class="breadcrumb navbar-breadcrumb">
-        <li>Dashboard</li>
+        <li>Remote Monitoring Dashboard</li>
     </ol>
 }
 
 <div class="side-body padding-top">
     @Html.PowerBIAccessToken()
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-            <a href="#">
-                <div class="card red summary-inline">
-                    <div class="card-body">
-                        <i class="icon fa fa-inbox fa-4x"></i>
-                        <div class="content">
-                            <div class="title">50</div>
-                            <div class="sub-title">New Mails</div>
+    <div class="container body">
+        <div class="main_container">
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="row top_tiles" style="margin: 10px 0;">
+                        <div class="col-md-3 col-sm-6 col-xs-6 tile">
+                            <h4>Latest LinuxTurbine Power</h4>
+                            <h2 id="LinuxPower" value="" type="text">0</h2>
+                                <span class="sparkline_one" style="height: 200px;">
+                                    <canvas width="250" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                </span>                       
                         </div>
-                        <div class="clear-both"></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-            <a href="#">
-                <div class="card yellow summary-inline">
-                    <div class="card-body">
-                        <i class="icon fa fa-comments fa-4x"></i>
-                        <div class="content">
-                            <div class="title">23</div>
-                            <div class="sub-title">New Message</div>
+                        <div class="col-md-3 col-sm-6 col-xs-6 tile">
+                            <h4>Latest WinTurbine Power</h4>
+                            <h2 id="WinPower" value="" type="text">0</h2>
+                            <span class="sparkline_two" style="height: 200px;">
+                                <canvas width="250" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                            </span>
                         </div>
-                        <div class="clear-both"></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-            <a href="#">
-                <div class="card green summary-inline">
-                    <div class="card-body">
-                        <i class="icon fa fa-tags fa-4x"></i>
-                        <div class="content">
-                            <div class="title">280</div>
-                            <div class="sub-title">Product View</div>
+                        <div class="col-md-3 col-sm-6 col-xs-6 tile">
+                            <h4>LinuxTurbine Warning</h4>
+                            <h2 id="LinuxWarning" type="text">0</h2>
+                            <span class="sparkline_three" style="height: 200px;">
+                                <canvas width="250" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                            </span>
                         </div>
-                        <div class="clear-both"></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-            <a href="#">
-                <div class="card blue summary-inline">
-                    <div class="card-body">
-                        <i class="icon fa fa-share-alt fa-4x"></i>
-                        <div class="content">
-                            <div class="title">16</div>
-                            <div class="sub-title">Share</div>
+                        <div class="col-md-3 col-sm-6 col-xs-6 tile">
+                            <h4>WinTurbine Warning</h4>
+                            <h2 id="WinWarning" value="0" type="text">0</h2>
+                            <span class="sparkline_four" style="height: 200px;">
+                                <canvas width="250" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                            </span>
                         </div>
-                        <div class="clear-both"></div>
                     </div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="row  no-margin-bottom">
-        <div class="col-sm-6 col-xs-12">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="card primary">
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="dashboard_graph x_panel">
+                                <div class="row x_title">
+                                        <h3>Current Operation<small>&nbsp Wind Speed by Each Turbine </small></h3>
+                                </div>
+                                <div class="x_content">
+                                    <div class="demo-container" style="height:250px">
+                                        <div id="placeholder3xx3" class="demo-placeholder" style="width: 100%; height:250px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @*Depriciation Bar*@
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel fixed_height_320">
+                                <div class="x_title">
+                                    <h2>Operation Efficiency</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <h4>Depreciation</h4>
+                                    <br>
+                                    <div class="row widget_summary">
+                                        &nbsp&nbsp
+                                            <div class="w_left w_25">
+                                                <span>LinuxTurbine</span>
+                                            </div>
+                                            <div class="w_center w_55">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-green" id="linuxDepriciationBar" role="progressbar" style="width: 100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w_right w_20">
+                                                <span id="linuxDepriciation" style="font-family:'Segoe UI'; font-size:20px; color:dimgrey; vertical-align: middle;">1</span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    <div class="row widget_summary">
+                                        &nbsp&nbsp
+                                        <div class="w_left w_25">
+                                            <span>WinTurbine</span>
+                                        </div>
+                                        <div class="w_center w_55">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-green" id="winDepriciationBar" role="progressbar" style="width: 100%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w_right w_20">
+                                            <span id="winDepriciation" style="font-family:'Segoe UI'; font-size:20px; color:dimgrey">1</span>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @* Device Rules *@
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel fixed_height_320">
+                                <div class="x_title">
+                                    <h2>Device Rules</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="row">
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+                                            <h4>Cut-Out Speed</h4>
+                                            <input type="range" min="0" max="30" value="14" id="fader"
+                                                   step="1" oninput="outputUpdate(value)">
+                                        </div>
+                                        <div class="co2-lg-2 col-md-2 col-sm-2">
+                                            <div width=50%></div>
+                                            <div>
+                                            <output for="fader" id="volume" class="w_right" style="font-family:'Segoe UI'; font-size:20px; color:dimgrey; padding-top:20px; padding-bottom:20px">14</output>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+                                            <h4>Depreciation Warning</h4>
+                                            <input type="range" min="0" max="1" value="0.5" id="fader2"
+                                                   step="0.01" oninput="output2Update(value)">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div width=50%></div>
+                                            <div>
+                                                <output for="fader2" id="volume2" style="font-family:'Segoe UI'; font-size:20px; color:dimgrey; padding-top:20px; padding-bottom:20px">0.5</output>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-3 col-sm-3">
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 w-right">
+                                            <div text-decoration none !important" class="myButton" role="button" onclick="cancelDeviceRules()" float="left" style="font-family:'Segoe UI'; font-size:20px; color:#ABABAB;">CANCEL</div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 w-right">
+                                            <div text-decoration none !important" class="myButton" role="button" onclick="applayDeviceRules()" float="left" style="font-family:'Segoe UI'; font-size:20px; color:#1abc9c;">APPLY</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @* Control Panel *@
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel fixed_height_320">
+                                <div class="x_title">
+                                    <h2>Control Panel</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="row">
+                                            <h4 style="color:lightslategrey">&nbsp&nbspLinuxTurbine</h4>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <h4>Power</h4>
+                                            <br>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <label class="switch" value="on">
+                                                <input type="checkbox" id="enableLinuxTurbineCheckbox" checked onclick="enableWindTurbine('LinuxTurbine')">
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <h4>Maintain</h4>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="setApply" style="color:white" id="resetLinuxTurbineButton" onclick="resetButton('LinuxTurbine')">SET</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h4 style="color:lightslategrey">&nbsp&nbspWinTurbine</h4>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <h4>Power</h4>
+                                            <br>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <label class="switch" value="on">
+                                                <input type="checkbox" id="enableWinTurbineCheckbox" checked onclick="enableWindTurbine('WinTurbine')">
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <h4>Maintain</h4>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="setApply" style="color:white" id="resetLinuxTurbineButton" onclick="resetButton('WinTurbine')">SET</div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="thumbnail no-margin-bottom">
-                        <img src="../img/thumbnails/picjumbo.com_IMG_4566.jpg" class="img-responsive">
-                        <div class="caption">
-                            <h3 id="thumbnail-label">Thumbnail label<a class="anchorjs-link" href="#thumbnail-label"><span class="anchorjs-icon"></span></a></h3>
-                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <div class="thumbnail no-margin-bottom">
-                        <img src="../img/thumbnails/picjumbo.com_IMG_3241.jpg" class="img-responsive">
-                        <div class="caption">
-                            <h3 id="thumbnail-label">Thumbnail label<a class="anchorjs-link" href="#thumbnail-label"><span class="anchorjs-icon"></span></a></h3>
-                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                            <p><a href="#" class="btn btn-success" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xs-12">
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="card primary">
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <div class="card primary">
-                    </div>
-                </div>
-            </div>
-            <div class="card card-success">
-                <div class="card-header">
-                    <div class="card-title">
-                        <div class="title"><i class="fa fa-comments-o"></i> Last Message</div>
-                    </div>
-                    <div class="clear-both"></div>
-                </div>
-                <div class="card-body no-padding">
-                    <ul class="message-list">
-                        <a href="#">
-                            <li>
-                                <img src="../img/profile/profile-1.jpg" class="profile-img pull-left">
-                                <div class="message-block">
-                                    <div>
-                                        <span class="username">Tui2Tone</span> <span class="message-datetime">12 min ago</span>
-                                    </div>
-                                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.</div>
-                                </div>
-                            </li>
-                        </a>
-                        <a href="#">
-                            <li>
-                                <img src="../img/profile/profile-1.jpg" class="profile-img pull-left">
-                                <div class="message-block">
-                                    <div>
-                                        <span class="username">Tui2Tone</span> <span class="message-datetime">15 min ago</span>
-                                    </div>
-                                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.</div>
-                                </div>
-                            </li>
-                        </a>
-                        <a href="#">
-                            <li>
-                                <img src="../img/profile/profile-1.jpg" class="profile-img pull-left">
-                                <div class="message-block">
-                                    <div>
-                                        <span class="username">Tui2Tone</span> <span class="message-datetime">2 hour ago</span>
-                                    </div>
-                                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.</div>
-                                </div>
-                            </li>
-                        </a>
-                        <a href="#">
-                            <li>
-                                <img src="../img/profile/profile-1.jpg" class="profile-img pull-left">
-                                <div class="message-block">
-                                    <div>
-                                        <span class="username">Tui2Tone</span> <span class="message-datetime">1 day ago</span>
-                                    </div>
-                                    <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.</div>
-                                </div>
-                            </li>
-                        </a>
-                        <a href="#" id="message-load-more">
-                            <li class="text-center load-more">
-                                <i class="fa fa-refresh"></i> load more..
-                            </li>
-                        </a>
-                    </ul>
-                </div>
-            </div>
+            <!-- /page content -->
         </div>
     </div>
 </div>

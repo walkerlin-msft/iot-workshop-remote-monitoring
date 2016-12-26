@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.IO;
 
 namespace SimulatedWindTurbine
 {
@@ -31,6 +32,10 @@ namespace SimulatedWindTurbine
 
                 /* Task for the message receiving */
                 ReceiveCloudToDeviceMessageAsync();
+
+                /* Task for send blob using IoT Hub */
+                //SendToBlobAsync();
+
             } catch (FormatException ex)
             {
                 Console.WriteLine("Please make sure you have pasted the correct connection string of IoT Hub!!\n\n FormatException={0}", ex.ToString());
@@ -109,6 +114,23 @@ namespace SimulatedWindTurbine
 
             if (_currentDepreciation < MINIMUM_DEPRECIATION)
                 _currentDepreciation = MINIMUM_DEPRECIATION;
+        }
+
+        private static async void SendToBlobAsync()
+        {
+            string srcFile = @"C:\temp\123.docx";
+            string destFileName = DateTime.UtcNow.ToString("yyyy-MM-ddTHH-mm-ss-fffZ") + ".docx";
+
+            Console.WriteLine("Uploading srcFileName: {0}", srcFile);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            using (var sourceData = new FileStream(srcFile, FileMode.Open))
+            {
+                await _deviceClient.UploadToBlobAsync(destFileName, sourceData);
+            }
+
+            watch.Stop();
+            Console.WriteLine("Time to upload file: {0}ms\n", watch.ElapsedMilliseconds);
         }
 
         private static async void ReceiveCloudToDeviceMessageAsync()

@@ -21,9 +21,6 @@ namespace AlarmServiceBusConsoleApp
         private const string DEVICEID_WINDOWS_TURBINE = "WinTurbine";// It's hard-coded for this workshop
         private const string DEVICEID_LINUX_TURBINE = "LinuxTurbine";// It's hard-coded for this workshop
 
-        /* Debug for Linux C# Simulator */
-        private const bool _forceCSharpClientUsed = false;
-
         static void Main(string[] args)
         {   
             Console.WriteLine("Console App for Alarm Service Bus...");
@@ -86,14 +83,7 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionCutOutSpeed(AlarmMessage alarmMessage)
         {
-            WriteHighlightedMessage(
-                    alarmMessage.ioTHubDeviceID +
-                    " is CutOutSpeed! Speed=" + alarmMessage.reading +
-                    ", MessageID=" + alarmMessage.messageID +
-                    ", Threshold=" + alarmMessage.threshold,
-                    ConsoleColor.Yellow);
-
-            if (_forceCSharpClientUsed | alarmMessage.ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
+            if (alarmMessage.ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
                 ActionCutOutSpeedWindows(alarmMessage);
             else if (alarmMessage.ioTHubDeviceID.Equals(DEVICEID_LINUX_TURBINE))
                 ActionCutOutSpeedLinux(alarmMessage);
@@ -101,6 +91,13 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionCutOutSpeedWindows(AlarmMessage alarmMessage)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(alarmMessage.ioTHubDeviceID)+
+                    " CutOutSpeed! Speed=" + alarmMessage.reading +
+                    ", MessageID=" + alarmMessage.messageID +
+                    ", Threshold=" + alarmMessage.threshold,
+                    ConsoleColor.Yellow);
+
             C2DCommand c2dCommand = new C2DCommand();
             c2dCommand.command = C2DCommand.COMMAND_CUTOUT_SPEED_WARNING;
             c2dCommand.value = alarmMessage.messageID;
@@ -114,6 +111,13 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionCutOutSpeedLinux(AlarmMessage alarmMessage)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(alarmMessage.ioTHubDeviceID) +
+                    " CutOutSpeed! Speed=" + alarmMessage.reading +
+                    ", MessageID=" + alarmMessage.messageID +
+                    ", Threshold=" + alarmMessage.threshold,
+                    ConsoleColor.DarkYellow);
+
             C2DCommandLinux c2dCommand = new C2DCommandLinux();
 
             c2dCommand.Name = C2DCommandLinux.COMMAND_CUTOUT_SPEED_WARNING;
@@ -126,14 +130,7 @@ namespace AlarmServiceBusConsoleApp
         }
         private static void ActionRepair(AlarmMessage alarmMessage)
         {
-            WriteHighlightedMessage(
-                    alarmMessage.ioTHubDeviceID +
-                    " is Repair! Depreciation=" + alarmMessage.reading +
-                    ", MessageID=" + alarmMessage.messageID +
-                    ", Threshold=" + alarmMessage.threshold,
-                    ConsoleColor.Red);
-
-            if (_forceCSharpClientUsed | alarmMessage.ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
+            if (alarmMessage.ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
                 ActionRepairWindows(alarmMessage);
             else if (alarmMessage.ioTHubDeviceID.Equals(DEVICEID_LINUX_TURBINE))
                 ActionRepairLinux(alarmMessage);
@@ -141,6 +138,13 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionRepairLinux(AlarmMessage alarmMessage)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(alarmMessage.ioTHubDeviceID) +
+                    " Repair! Depreciation=" + alarmMessage.reading +
+                    ", MessageID=" + alarmMessage.messageID +
+                    ", Threshold=" + alarmMessage.threshold,
+                    ConsoleColor.DarkRed);
+
             C2DCommandLinux c2dCommand = new C2DCommandLinux();
 
             c2dCommand.Name = C2DCommandLinux.COMMAND_REPAIR_WARNING;
@@ -154,6 +158,13 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionRepairWindows(AlarmMessage alarmMessage)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(alarmMessage.ioTHubDeviceID) +
+                    " Repair! Depreciation=" + alarmMessage.reading +
+                    ", MessageID=" + alarmMessage.messageID +
+                    ", Threshold=" + alarmMessage.threshold,
+                    ConsoleColor.Red);
+
             C2DCommand c2dCommand = new C2DCommand();
             c2dCommand.command = C2DCommand.COMMAND_REPAIR_WARNING;
             c2dCommand.value = alarmMessage.messageID;
@@ -167,13 +178,7 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionEnableWindTurbine(string ioTHubDeviceID, string on, string time)
         {
-            WriteHighlightedMessage(
-                    ioTHubDeviceID +
-                    " set EnableWindTurbine ON=" + on +
-                    ", Time=" + time,
-                    ConsoleColor.Green);
-
-            if (_forceCSharpClientUsed | ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
+            if (ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
                 ActionEnableWindowsWindTurbine(ioTHubDeviceID, on, time);
             else if (ioTHubDeviceID.Equals(DEVICEID_LINUX_TURBINE))
                 ActionEnableLinuxWindTurbine(ioTHubDeviceID, on, time);
@@ -181,6 +186,12 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionEnableWindowsWindTurbine(string ioTHubDeviceID, string on, string time)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(ioTHubDeviceID) +
+                    " WindTurbine Enable=" + on +
+                    ", Time=" + time,
+                    ConsoleColor.Green);
+
             C2DCommand c2dCommand = new C2DCommand();
             c2dCommand.command = C2DCommand.COMMAND_TURN_ONOFF;
             c2dCommand.value = on;
@@ -194,6 +205,12 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionEnableLinuxWindTurbine(string ioTHubDeviceID, string on, string time)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(ioTHubDeviceID) +
+                    " WindTurbine Enable=" + on +
+                    ", Time=" + time,
+                    ConsoleColor.DarkGreen);
+
             C2DCommandLinux c2dCommand = new C2DCommandLinux();
 
             c2dCommand.Name = C2DCommandLinux.COMMAND_TURN_ONOFF;
@@ -210,13 +227,7 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionResetDepreciation(string ioTHubDeviceID, string time)
         {
-            WriteHighlightedMessage(
-                    ioTHubDeviceID +
-                    " reset the depreciation" +
-                    ", Time=" + time,
-                    ConsoleColor.Cyan);
-
-            if (_forceCSharpClientUsed | ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
+            if (ioTHubDeviceID.Equals(DEVICEID_WINDOWS_TURBINE))
                 ActionResetDepreciationWindows(ioTHubDeviceID, time);
             else if (ioTHubDeviceID.Equals(DEVICEID_LINUX_TURBINE))
                 ActionResetDepreciationLinux(ioTHubDeviceID, time);
@@ -224,6 +235,12 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionResetDepreciationWindows(string ioTHubDeviceID, string time)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(ioTHubDeviceID) +
+                    " Depreciation Reset!" +
+                    ", Time=" + time,
+                    ConsoleColor.Cyan);
+
             C2DCommand c2dCommand = new C2DCommand();
             c2dCommand.command = C2DCommand.COMMAND_RESET_DEPRECIATION;
             c2dCommand.value = "1";// set it to 100%
@@ -237,6 +254,12 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ActionResetDepreciationLinux(string ioTHubDeviceID, string time)
         {
+            WriteHighlightedMessage(
+                    GetDeviceIdHint(ioTHubDeviceID) +
+                    " Depreciation Reset!" +
+                    ", Time=" + time,
+                    ConsoleColor.DarkCyan);
+
             C2DCommandLinux c2dCommand = new C2DCommandLinux();
 
             c2dCommand.Name = C2DCommandLinux.COMMAND_RESET_DEPRECIATION;
@@ -267,6 +290,11 @@ namespace AlarmServiceBusConsoleApp
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ResetColor();
+        }
+
+        private static string GetDeviceIdHint(string ioTHubDeviceID)
+        {
+            return "[" + ioTHubDeviceID + "]";
         }
     }
 }

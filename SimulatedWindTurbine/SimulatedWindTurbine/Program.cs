@@ -24,7 +24,7 @@ namespace SimulatedWindTurbine
             try
             {
                 /* Create the DeviceClient instance */
-                _deviceClient = DeviceClient.CreateFromConnectionString(iotHubConnectionString, DEVICENAME, TransportType.Amqp);
+                _deviceClient = DeviceClient.CreateFromConnectionString(iotHubConnectionString, TransportType.Amqp);
 
                 /* Task for the message sending */
                 SendWindTurbineMessageToCloudAsync();

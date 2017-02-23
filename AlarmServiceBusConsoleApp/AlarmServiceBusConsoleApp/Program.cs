@@ -22,7 +22,7 @@ namespace AlarmServiceBusConsoleApp
         private const string DEVICEID_LINUX_TURBINE = "LinuxTurbine";// It's hard-coded for this workshop
 
         static void Main(string[] args)
-        {   
+        {
             Console.WriteLine("Console App for Alarm Service Bus...");
 
             /* Load the settings from App.config */
@@ -61,7 +61,7 @@ namespace AlarmServiceBusConsoleApp
 
         private static void ProcessAlarmMessage(AlarmMessage alarmMessage)
         {
-            switch(alarmMessage.alarmType)
+            switch (alarmMessage.alarmType)
             {
                 case "CutOutSpeed":
                     ActionCutOutSpeed(alarmMessage);
@@ -92,7 +92,7 @@ namespace AlarmServiceBusConsoleApp
         private static void ActionCutOutSpeedWindows(AlarmMessage alarmMessage)
         {
             WriteHighlightedMessage(
-                    GetDeviceIdHint(alarmMessage.ioTHubDeviceID)+
+                    GetDeviceIdHint(alarmMessage.ioTHubDeviceID) +
                     " CutOutSpeed! Speed=" + alarmMessage.reading +
                     ", MessageID=" + alarmMessage.messageID +
                     ", Threshold=" + alarmMessage.threshold,

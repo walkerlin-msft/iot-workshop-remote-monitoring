@@ -125,50 +125,10 @@ namespace SimulatedLinuxTurbine
 
                 string msg = Encoding.ASCII.GetString(receivedMessage.GetBytes());
 
-                if (DEVICENAME.Equals("LinuxTurbine"))
-                {
-                    C2DCommandLinux c2dCommand = JsonConvert.DeserializeObject<C2DCommandLinux>(msg);
-                    ProcessLinuxCommand(c2dCommand);
-                }
-                else
-                {
-                    C2DCommand c2dCommand = JsonConvert.DeserializeObject<C2DCommand>(msg);
-                    ProcessCommand(c2dCommand);
-                }
+                C2DCommandLinux c2dCommand = JsonConvert.DeserializeObject<C2DCommandLinux>(msg);
+                ProcessLinuxCommand(c2dCommand);
 
                 await _deviceClient.CompleteAsync(receivedMessage);
-            }
-        }
-
-        private static void ProcessCommand(C2DCommand c2dCommand)
-        {
-            switch (c2dCommand.command)
-            {
-                case C2DCommand.COMMAND_CUTOUT_SPEED_WARNING:
-                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Yellow);
-                    break;
-                case C2DCommand.COMMAND_REPAIR_WARNING:
-                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Red);
-                    break;
-                case C2DCommand.COMMAND_TURN_ONOFF:
-                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Green);
-                    _isStopped = c2dCommand.value.Equals("0"); // 0 means turn the machine off, otherwise is turning on.
-                    break;
-                case C2DCommand.COMMAND_RESET_DEPRECIATION:
-                    DisplayReceivedCommand(c2dCommand, ConsoleColor.Cyan);
-                    try
-                    {
-                        _currentDepreciation = Convert.ToDouble(c2dCommand.value);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Unable to convert '{0}' to a Double. \n\nException={1}", c2dCommand.value, ex.ToString());
-                    }
-
-                    break;
-                default:
-                    Console.WriteLine("IT IS NOT A SUPPORTED COMMAND!");
-                    break;
             }
         }
 
@@ -196,13 +156,6 @@ namespace SimulatedLinuxTurbine
                     Console.WriteLine("IT IS NOT A SUPPORTED COMMAND!");
                     break;
             }
-        }
-
-        private static void DisplayReceivedCommand(C2DCommand c2dCommand, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine("Received message: {0}, {1}, {2}\n", c2dCommand.command, c2dCommand.value, c2dCommand.time);
-            Console.ResetColor();
         }
 
         private static void DisplayReceivedLinuxCommand(string command, string value, ConsoleColor color)

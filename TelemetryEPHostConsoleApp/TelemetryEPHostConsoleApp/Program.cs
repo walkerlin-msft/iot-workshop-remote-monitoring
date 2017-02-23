@@ -1,6 +1,10 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TelemetryEPHostConsoleApp
 {
@@ -15,7 +19,7 @@ namespace TelemetryEPHostConsoleApp
 
             /* Load the settings from App.config */
             string isProduction = ConfigurationManager.AppSettings["WebServer.isProduction"];
-            if(isProduction.Equals("1"))
+            if (isProduction.Equals("1"))
                 _webServerUrl = ConfigurationManager.AppSettings["WebServer.Production"];
             else
                 _webServerUrl = ConfigurationManager.AppSettings["WebServer.Localhost"];

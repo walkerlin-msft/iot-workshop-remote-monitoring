@@ -57,6 +57,13 @@ namespace TelemetryEPHostConsoleApp
             {
                 TelemetryMessage telemetryMessage = JsonConvert.DeserializeObject<TelemetryMessage>(data);
 
+                ConsoleColor color;
+                if (telemetryMessage.deviceId.Equals("LinuxTurbine"))
+                    color = ConsoleColor.Yellow;
+                else
+                    color = ConsoleColor.Green;
+
+                Console.ForegroundColor = color;
                 Console.WriteLine("deviceId = {0}, msgId = {1}, speed = {2}, depreciation = {3}, power = {4}, time = {5}", 
                     telemetryMessage.deviceId, 
                     telemetryMessage.msgId, 
@@ -64,6 +71,7 @@ namespace TelemetryEPHostConsoleApp
                     telemetryMessage.depreciation,
                     telemetryMessage.power,
                     telemetryMessage.time);
+                Console.ResetColor();
 
                 string webSCResult = _webSC.PostTelemetryMessage(telemetryMessage);
                 //Console.WriteLine(webSCResult);

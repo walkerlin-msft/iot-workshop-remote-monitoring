@@ -48,7 +48,9 @@ namespace RefBlobConsoleApp
 
             // Create and upload the blob
             CreateAndUploadBlob(container, GetBlobFileName());
-            
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("You've created a reference alarm rule in this Blob Storage! Now you can press ENTER to close this App.\n");
             Console.ReadLine();
 
         }
@@ -104,7 +106,9 @@ namespace RefBlobConsoleApp
 
             // Create the device rules for the content of blob
             String blobContent = CreateDeviceRules();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("blobContent={0}\n", blobContent);
+            Console.ResetColor();
 
             byte[] content = ASCIIEncoding.ASCII.GetBytes(blobContent);
             blockBlob.UploadFromByteArrayAsync(content, 0, content.Count()).Wait();

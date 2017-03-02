@@ -19,22 +19,23 @@ namespace SimulatedLinuxTurbine
         {
             Console.WriteLine("Simulated Wind Turbine\n");
 
-            /* Load the settings from App.config */
-            string iotHubConnectionString = ConfigurationManager.AppSettings["IoTHubConnectionString"];
-            Console.WriteLine("iotHubUri={0}\n", iotHubConnectionString);
+            // String containing Hostname, Device Id & Device Key in one of the following formats:
+            //  "HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"
+            string deviceConnectionString = ConfigurationManager.AppSettings["DeviceConnectionString"];
+            Console.WriteLine("deviceConnectionString={0}\n", deviceConnectionString);
 
             try
             {
                 /* Create the DeviceClient instance */
-                _deviceClient = DeviceClient.CreateFromConnectionString(iotHubConnectionString, TransportType.Amqp);
+                _deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
 
-                /* Task for the message sending */
-                SendWindTurbineMessageToCloudAsync();
+                /* Task for sending message */
+                sendWindTurbineMessageToCloudAsync();
 
-                /* Task for the message receiving */
-                ReceiveCloudToDeviceMessageAsync();
-            }
-            catch (FormatException ex)
+                /* Task for receiving message */
+                receiveCloudToDeviceMessageAsync();
+
+            } catch (FormatException ex)
             {
                 Console.WriteLine("Please make sure you have pasted the correct connection string of IoT Hub!!\n\n FormatException={0}", ex.ToString());
             }
@@ -48,7 +49,7 @@ namespace SimulatedLinuxTurbine
         const double MINIMUM_DEPRECIATION = 0.3;
         const double DEPRECIATION_RATE = 0.01;
         private static double _currentDepreciation { get; set; }
-        private static async void SendWindTurbineMessageToCloudAsync()
+        private static async void sendWindTurbineMessageToCloudAsync()
         {
             _currentDepreciation = MAXIMUM_DEPRECIATION; // 100%
             int minWindSpeed = 2; // m/s
@@ -60,8 +61,8 @@ namespace SimulatedLinuxTurbine
                 if (_isStopped == false)
                 {
                     int currentWindSpeed = minWindSpeed + (rand.Next() % 19);// 2~20
-                    CalculateNewDepreciation(i);
-                    double currentWindPower = GetWindPower(currentWindSpeed, _currentDepreciation);
+                    calculateNewDepreciation(i);
+                    double currentWindPower = getWindPower(currentWindSpeed, _currentDepreciation);
 
                     var telemetryDataPoint = new
                     {
@@ -70,7 +71,7 @@ namespace SimulatedLinuxTurbine
                         speed = currentWindSpeed,
                         depreciation = _currentDepreciation,
                         power = currentWindPower,
-                        time = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") // ISO8601 format, https://zh.wikipedia.org/wiki/ISO_8601
+                        time = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") // ISO8601 format, https://zh.wikipedia.org/wiki/ISO_8601
                     };
 
                     var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
@@ -90,7 +91,7 @@ namespace SimulatedLinuxTurbine
         }
 
         /* Simulate the real wind power */
-        private static double GetWindPower(int speed, double depreciation)
+        private static double getWindPower(int speed, double depreciation)
         {
             if (speed <= 3)
                 return 0;
@@ -104,7 +105,7 @@ namespace SimulatedLinuxTurbine
                 return 1000 * depreciation;
         }
 
-        private static void CalculateNewDepreciation(int i)
+        private static void calculateNewDepreciation(int i)
         {
             if (i % 5 == 0)
             {
@@ -115,7 +116,7 @@ namespace SimulatedLinuxTurbine
                 _currentDepreciation = MINIMUM_DEPRECIATION;
         }
 
-        private static async void ReceiveCloudToDeviceMessageAsync()
+        private static async void receiveCloudToDeviceMessageAsync()
         {
             Console.WriteLine("\nReceiving cloud to device messages from service");
             while (true)
@@ -126,30 +127,30 @@ namespace SimulatedLinuxTurbine
                 string msg = Encoding.ASCII.GetString(receivedMessage.GetBytes());
 
                 C2DCommandLinux c2dCommand = JsonConvert.DeserializeObject<C2DCommandLinux>(msg);
-                ProcessLinuxCommand(c2dCommand);
+                processLinuxCommand(c2dCommand);
 
                 await _deviceClient.CompleteAsync(receivedMessage);
             }
         }
 
-        private static void ProcessLinuxCommand(C2DCommandLinux c2dCommand)
+        private static void processLinuxCommand(C2DCommandLinux c2dCommand)
         {
             switch (c2dCommand.Name)
             {
                 case C2DCommandLinux.COMMAND_CUTOUT_SPEED_WARNING:
-                    DisplayReceivedLinuxCommand(c2dCommand.Name, null, ConsoleColor.Yellow);
+                    displayReceivedLinuxCommand(c2dCommand.Name, null, ConsoleColor.Yellow);
                     break;
                 case C2DCommandLinux.COMMAND_REPAIR_WARNING:
-                    DisplayReceivedLinuxCommand(c2dCommand.Name, null, ConsoleColor.Red);
+                    displayReceivedLinuxCommand(c2dCommand.Name, null, ConsoleColor.Red);
                     break;
                 case C2DCommandLinux.COMMAND_TURN_ONOFF:
                     string on = (string)c2dCommand.Parameters["On"];
-                    DisplayReceivedLinuxCommand(c2dCommand.Name, on, ConsoleColor.Green);
+                    displayReceivedLinuxCommand(c2dCommand.Name, on, ConsoleColor.Green);
                     _isStopped = on.Equals("0"); // 0 means turn the machine off, otherwise is turning on.
                     break;
                 case C2DCommandLinux.COMMAND_RESET_DEPRECIATION:
                     string depreciation = (string)c2dCommand.Parameters["Depreciation"];
-                    DisplayReceivedLinuxCommand(c2dCommand.Name, depreciation, ConsoleColor.Cyan);
+                    displayReceivedLinuxCommand(c2dCommand.Name, depreciation, ConsoleColor.Cyan);
                     _currentDepreciation = Convert.ToDouble(depreciation);
                     break;
                 default:
@@ -158,7 +159,7 @@ namespace SimulatedLinuxTurbine
             }
         }
 
-        private static void DisplayReceivedLinuxCommand(string command, string value, ConsoleColor color)
+        private static void displayReceivedLinuxCommand(string command, string value, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             if (value != null)

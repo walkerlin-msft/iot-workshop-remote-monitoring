@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RefBlobConsoleApp
+namespace RulesBlobConsoleApp
 {
     class Program
     {
@@ -24,7 +24,7 @@ namespace RefBlobConsoleApp
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Console App for creating the reference blob...\n");
+            Console.WriteLine("Console App for creating the rules blob...\n");
 
             /* Load the settings from App.config */
             string storageAccountName = ConfigurationManager.AppSettings["StorageAccountName"];

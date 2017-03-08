@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlarmServiceBusConsoleApp", "AlarmServiceBusConsoleApp\AlarmServiceBusConsoleApp.csproj", "{ADAE82F3-F21A-418E-BE4D-90A165F9424C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlertServiceBus", "AlertServiceBus\AlertServiceBus.csproj", "{ADAE82F3-F21A-418E-BE4D-90A165F9424C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

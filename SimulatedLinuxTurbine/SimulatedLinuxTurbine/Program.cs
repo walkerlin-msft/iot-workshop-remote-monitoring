@@ -71,7 +71,7 @@ namespace SimulatedLinuxTurbine
                         speed = currentWindSpeed,
                         depreciation = _currentDepreciation,
                         power = currentWindPower,
-                        time = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") // ISO8601 format, https://zh.wikipedia.org/wiki/ISO_8601
+                        time = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") // ISO8601 format, https://zh.wikipedia.org/wiki/ISO_8601
                     };
 
                     var messageString = JsonConvert.SerializeObject(telemetryDataPoint);

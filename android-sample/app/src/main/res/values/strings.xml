@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Wind Turbine Sample</string>
+    <string name="light">Speed</string>
+    <string name="depreciation">Depreciation</string>
+</resources>

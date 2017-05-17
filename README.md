@@ -21,6 +21,7 @@ And some useful libraries:
 ## Training Materials
 
 All documents are available for download now.
+
 [IoT Workshop in Jan 2017](https://aka.ms/iot-workshop-jan2017)
 [IoT Workshop in Mar 2017](https://aka.ms/iot-workshop-mar2017)
 [IoT Workshop in Apr 2017](https://aka.ms/iot-workshop-april2017)

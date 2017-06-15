@@ -35,7 +35,8 @@ namespace SimulatedLinuxTurbine
                 /* Task for receiving message */
                 receiveCloudToDeviceMessageAsync();
 
-            } catch (FormatException ex)
+            }
+            catch (FormatException ex)
             {
                 Console.WriteLine("Please make sure you have pasted the correct connection string of IoT Hub!!\n\n FormatException={0}", ex.ToString());
             }
@@ -126,8 +127,16 @@ namespace SimulatedLinuxTurbine
 
                 string msg = Encoding.ASCII.GetString(receivedMessage.GetBytes());
 
-                C2DCommandLinux c2dCommand = JsonConvert.DeserializeObject<C2DCommandLinux>(msg);
-                processLinuxCommand(c2dCommand);
+                try
+                {
+                    C2DCommandLinux c2dCommand = JsonConvert.DeserializeObject<C2DCommandLinux>(msg);
+                    processLinuxCommand(c2dCommand);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("CANNOT PROCESS THIS COMMAND!");
+                }
+
 
                 await _deviceClient.CompleteAsync(receivedMessage);
             }

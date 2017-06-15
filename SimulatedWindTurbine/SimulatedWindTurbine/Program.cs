@@ -122,9 +122,16 @@ namespace SimulatedWindTurbine
                 if (receivedMessage == null) continue;// It returns null after a specifiable timeout period (in this case, the default of one minute is used)
 
                 string msg = Encoding.ASCII.GetString(receivedMessage.GetBytes());
-                C2DCommand c2dCommand = JsonConvert.DeserializeObject<C2DCommand>(msg);
 
-                processCommand(c2dCommand);
+                try
+                {
+                    C2DCommand c2dCommand = JsonConvert.DeserializeObject<C2DCommand>(msg);
+                    processCommand(c2dCommand);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("CANNOT PROCESS THIS COMMAND!");
+                }
 
                 await _deviceClient.CompleteAsync(receivedMessage);
             }

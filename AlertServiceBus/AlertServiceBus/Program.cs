@@ -294,7 +294,7 @@ namespace AlarmServiceBusConsoleApp
 
         private static string GetDeviceIdHint(string ioTHubDeviceID)
         {
-            return "[" + ioTHubDeviceID + "]";
+            return "[" + ioTHubDeviceID +" ("+ DateTime.UtcNow.ToString("MM-ddTHH:mm:ss") + ")"+ "]";
         }
     }
 }

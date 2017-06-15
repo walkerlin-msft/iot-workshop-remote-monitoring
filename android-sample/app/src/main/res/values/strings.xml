@@ -2,4 +2,8 @@
     <string name="app_name">Wind Turbine Sample</string>
     <string name="light">Speed</string>
     <string name="depreciation">Depreciation</string>
+    <string name="settings">Settings</string>
+    <string name="confirm">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
 </resources>

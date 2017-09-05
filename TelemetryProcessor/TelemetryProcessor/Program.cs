@@ -39,7 +39,7 @@ namespace TelemetryEPHostConsoleApp
             string storageAccountConnectionString = CombineConnectionString(storageAccountName, storageAccountKey);
             Console.WriteLine("storageAccountConnectionString={0}\n", storageAccountConnectionString);
 
-            string eventProcessorHostName = Guid.NewGuid().ToString();
+            string eventProcessorHostName = "EventProcessorHost-Info".ToLower();
             string leaseName = eventProcessorHostName;
 
             EventProcessorHost eventProcessorHost = new EventProcessorHost(

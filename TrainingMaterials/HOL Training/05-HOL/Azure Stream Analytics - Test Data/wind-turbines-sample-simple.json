@@ -1,0 +1,572 @@
+[
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1001",
+    "speed": 7,
+    "depreciation": 0.52,
+    "power": 104.0,
+    "time": "2017-02-24T09:09:30.8690000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:35.1665675Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:32.5110000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1002",
+    "speed": 8,
+    "depreciation": 0.52,
+    "power": 252.0,
+    "time": "2017-02-24T09:09:38.3310000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:40.2193465Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:37.6530000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1003",
+    "speed": 14,
+    "depreciation": 0.52,
+    "power": 520.0,
+    "time": "2017-02-24T09:09:43.4630000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:45.3824055Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:42.7840000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 68",
+    "speed": 12,
+    "depreciation": 0.79,
+    "power": 790.0,
+    "time": "2017-02-24T09:09:43.9360000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:48.0444122Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:45.4250000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1004",
+    "speed": 20,
+    "depreciation": 0.52,
+    "power": 520.0,
+    "time": "2017-02-24T09:09:48.6020000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:50.5855178Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:47.9300000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 69",
+    "speed": 13,
+    "depreciation": 0.79,
+    "power": 790.0,
+    "time": "2017-02-24T09:09:51.2730000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:53.2221063Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:50.6050000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1005",
+    "speed": 19,
+    "depreciation": 0.51,
+    "power": 510.0,
+    "time": "2017-02-24T09:09:53.7340000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:55.6408812Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:53.0620000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 70",
+    "speed": 3,
+    "depreciation": 0.78,
+    "power": 0.0,
+    "time": "2017-02-24T09:09:56.4200000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:09:58.3909092Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:55.7670000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1006",
+    "speed": 16,
+    "depreciation": 0.51,
+    "power": 510.0,
+    "time": "2017-02-24T09:09:58.8740000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:00.8151881Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:09:58.1890000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 71",
+    "speed": 4,
+    "depreciation": 0.78,
+    "power": 39.0,
+    "time": "2017-02-24T09:10:01.5700000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:03.4583802Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:00.8950000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1007",
+    "speed": 15,
+    "depreciation": 0.51,
+    "power": 510.0,
+    "time": "2017-02-24T09:10:04.0230000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:05.9937305Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:03.3400000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 72",
+    "speed": 18,
+    "depreciation": 0.78,
+    "power": 780.0,
+    "time": "2017-02-24T09:10:06.7130000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:08.6537001Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:06.0280000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1008",
+    "speed": 10,
+    "depreciation": 0.51,
+    "power": 502.0,
+    "time": "2017-02-24T09:10:09.1510000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:11.0912943Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:08.4660000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 73",
+    "speed": 11,
+    "depreciation": 0.78,
+    "power": 712.0,
+    "time": "2017-02-24T09:10:11.8600000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:13.7550386Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:11.1840000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1009",
+    "speed": 10,
+    "depreciation": 0.51,
+    "power": 502.0,
+    "time": "2017-02-24T09:10:14.2880000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:16.1958617Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:13.6060000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 74",
+    "speed": 7,
+    "depreciation": 0.78,
+    "power": 156.0,
+    "time": "2017-02-24T09:10:16.9980000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:18.9648763Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:16.3250000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1010",
+    "speed": 2,
+    "depreciation": 0.5,
+    "power": 0.0,
+    "time": "2017-02-24T09:10:19.4320000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:21.3994087Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:18.7490000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 75",
+    "speed": 15,
+    "depreciation": 0.77,
+    "power": 770.0,
+    "time": "2017-02-24T09:10:22.1450000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:24.0629155Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:21.4690000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1011",
+    "speed": 17,
+    "depreciation": 0.5,
+    "power": 500.0,
+    "time": "2017-02-24T09:10:24.5630000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:26.5138174Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:23.8930000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 76",
+    "speed": 6,
+    "depreciation": 0.77,
+    "power": 115.5,
+    "time": "2017-02-24T09:10:27.2840000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:29.2716909Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:26.6130000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1012",
+    "speed": 19,
+    "depreciation": 0.5,
+    "power": 500.0,
+    "time": "2017-02-24T09:10:29.6930000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:31.6021505Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:29.0210000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 77",
+    "speed": 7,
+    "depreciation": 0.77,
+    "power": 154.0,
+    "time": "2017-02-24T09:10:32.4270000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:34.3698215Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:31.7430000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1013",
+    "speed": 4,
+    "depreciation": 0.5,
+    "power": 25.0,
+    "time": "2017-02-24T09:10:34.8460000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:36.8293973Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:34.1650000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 78",
+    "speed": 18,
+    "depreciation": 0.77,
+    "power": 770.0,
+    "time": "2017-02-24T09:10:37.5790000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:39.5045351Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:36.9000000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1014",
+    "speed": 10,
+    "depreciation": 0.5,
+    "power": 500.0,
+    "time": "2017-02-24T09:10:40.0040000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:41.9477559Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:39.3240000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 79",
+    "speed": 4,
+    "depreciation": 0.77,
+    "power": 38.5,
+    "time": "2017-02-24T09:10:42.7220000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:44.6289468Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:42.0420000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1015",
+    "speed": 15,
+    "depreciation": 0.49,
+    "power": 490.0,
+    "time": "2017-02-24T09:10:45.1380000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:47.0609643Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:44.4640000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 80",
+    "speed": 7,
+    "depreciation": 0.76,
+    "power": 152.0,
+    "time": "2017-02-24T09:10:47.8770000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:49.8414285Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:47.1990000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "LinuxTurbine",
+    "msgId": "message id 1016",
+    "speed": 8,
+    "depreciation": 0.49,
+    "power": 249.0,
+    "time": "2017-02-24T09:10:50.2790000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:52.2566362Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:49.6080000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "LinuxTurbine",
+      "ConnectionDeviceGenerationId": "636159037263165773",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  },
+  {
+    "deviceId": "WinTurbine",
+    "msgId": "message id 81",
+    "speed": 13,
+    "depreciation": 0.76,
+    "power": 760.0,
+    "time": "2017-02-24T09:10:53.0160000Z",
+    "EventProcessedUtcTime": "2017-02-24T09:10:54.9066139Z",
+    "PartitionId": 0,
+    "EventEnqueuedUtcTime": "2017-02-24T09:10:52.3430000Z",
+    "IoTHub": {
+      "MessageId": null,
+      "CorrelationId": null,
+      "ConnectionDeviceId": "WinTurbine",
+      "ConnectionDeviceGenerationId": "636159080973109286",
+      "EnqueuedTime": "0001-01-01T00:00:00.0000000",
+      "StreamId": null
+    }
+  }
+]

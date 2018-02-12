@@ -1,0 +1,5 @@
+{"command":"CUTOUT_SPEED_WARNING","value":"message id 34","time":"2016-11-28T08:34:52.5220000Z"}
+{"command":"REPAIR_WARNING","value":"message id 34","time":"2016-11-28T08:34:52.5220000Z"}
+{"command":"TURN_ONOFF","value":"1","time":"2016-11-28T08:34:52.5220000Z"}
+{"command":"TURN_ONOFF","value":"0","time":"2016-11-28T08:34:52.5220000Z"}
+{"command":"RESET_DEPRECIATION","value":"1","time":"2016-11-28T08:34:52.5220000Z"}

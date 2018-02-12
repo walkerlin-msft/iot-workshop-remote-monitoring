@@ -1,0 +1,3 @@
+WorkspaceCollection : iotworkshop201708
+AccessKey : qZEgZwxb08IK4WMoVazJLO9QukkkisCU2bh5JvCjyc5j3P4rf3yLPQqi5jwRMeUTZXlfNWtdSkcCt0Jom8qtVA==
+WorkSpaceId : eea76678-ee80-4b08-ba03-7a7b7fcd3ee5

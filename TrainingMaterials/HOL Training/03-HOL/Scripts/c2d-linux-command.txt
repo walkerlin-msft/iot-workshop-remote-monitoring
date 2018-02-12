@@ -1,0 +1,7 @@
+{"Name":"CutoutSpeedWarning","Parameters":{}}
+{"Name":"RepairWarning","Parameters":{}}
+{"Name":"TurnOnOff","Parameters":{"On":1}}
+{"Name":"TurnOnOff","Parameters":{"On":0}}
+{"Name":"ResetDepreciation","Parameters":{"Depreciation":0.8}}
+{"Name":"ResetDepreciation","Parameters":{"Depreciation":1}}
+

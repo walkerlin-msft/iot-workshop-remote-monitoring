@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>IoT Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <!-- CSS Libs -->
+    <link rel="stylesheet" type="text/css" href="/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/checkbox3.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/select2.min.css">
+    <!-- CSS App -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/themes/flat-blue.css">
+    <link href="~/Content/powerbi.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <!-- Integrated Template -->
+    <!-- Bootstrap -->
+    <link type="text/css" href="/lib/css/bootstrap.min2.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link type="text/css" href="/lib/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link type="text/css" href="/lib/css/nprogress.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link type="text/css" href="/lib/css/bootstrap-progressbar-3.3.4.min.css")" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link type="text/css" href="/lib/css/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link type="text/css" href="/lib/css/custom.min.css" rel="stylesheet">
+    
+    @* show threshold range bar value *@
+    <script>
+    function outputUpdate(vol) {
+    document.querySelector('#volume').value = vol;
+    }
+    function output2Update(vol) {
+        document.querySelector('#volume2').value = vol;
+    }
+    </script>
+
+    @* Control & Threshold logics *@
+    <script>
+    
+    function resetButton(resetDeviceId) {
+        $.ajax({
+            type: "GET",
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+            url: '@Url.Action("ResetDepreciation", "Settings")',
+            data: { 'deviceId': resetDeviceId },
+            error: function () {
+                alert("An error occurred.");
+            },
+            success: function () {
+                alert(resetDeviceId + " has been reset");
+            }
+        });
+    }
+
+    function enableWindTurbine(enableDeviceId) {
+         
+        var onoff;
+        if (enableDeviceId == 'LinuxTurbine') {
+            onoff = document.getElementById("enableLinuxTurbineCheckbox").checked;
+        }
+        else if (enableDeviceId == 'WinTurbine')
+        {
+            onoff = document.getElementById("enableWinTurbineCheckbox").checked;
+        }
+
+        $.ajax({
+            type: "GET",
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',            
+            url: '@Url.Action("EnableWindTurbine", "Settings")',
+            data: { 'deviceId': enableDeviceId, 'on': onoff },
+            error: function () {
+                alert("An error occurred.");
+            },
+            success: function () {
+                if (onoff)
+                    alert(enableDeviceId + " has changed to ON");
+                else
+                    alert(enableDeviceId + " has changed to OFF");
+            }
+        });
+    }
+
+    var cutOutSpeed;
+    var depreciation;
+    var modify;
+    function applayDeviceRules() {
+        cutOutSpeed = document.getElementById("fader").value;
+        depreciation = document.getElementById("fader2").value;
+        //alert("You have updated the thereshold");
+        modify = "true";
+        // Call the Send method on the hub.
+        //chat.server.applayDeviceRules(cutOutSpeed, depreciation);
+        $.ajax({
+            type: "GET",
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+            url: '@Url.Action("ApplyDeviceRules", "Settings")',
+            data: { 'cutOutSpeed': cutOutSpeed, 'depreciation': depreciation },
+            error: function () {
+                alert("An error occurred.");
+            },
+            success: function () {                
+                alert("The device rules has changed!");
+                
+            }
+        });
+    }
+
+    function cancelDeviceRules() {
+        alert("You have cancelled your setting");
+        if (modify == "true") {
+            document.getElementById("fader").value = cutOutSpeed;
+            document.getElementById("fader2").value = depreciation;
+            document.getElementById("volume").value = cutOutSpeed;
+            document.getElementById("volume2").value = depreciation;
+        }
+        else {
+            document.getElementById("fader").value = 14;
+            document.getElementById("fader2").value = 0.5;
+            document.getElementById("volume").value = 14;
+            document.getElementById("volume2").value = 0.5;
+        }
+    }
+    </script>
+    
+    @* toggle css *@
+    <style>
+        /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {display:none;}
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #1BC4A0;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #1BC4A0;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #1BC4A0;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #1BC4A0;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .myButton:hover {
+    color:#9c1abc;
+    }
+    
+    .myButton:active {
+	position:relative;
+    color:#148f77;
+	top:1px;
+    }
+
+    .setApply {
+	-moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
+	box-shadow:inset 0px 1px 0px 0px #a4e271;
+    background-color:#1abc9c;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+	background-color:#1abc9c;
+	-moz-border-radius:34px;
+	-webkit-border-radius:34px;
+	border-radius:34px;
+	border:1px solid#1abc9c;
+	display:inline-block;
+	cursor:pointer;
+	color:#FFFFFF;
+	font-family:Verdana;
+	font-size:15px;
+	padding:6px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528009;
+    }
+    .setApply:hover {
+    background-color:#1a8bbc;
+    }
+    .setApply:active {
+	position:relative;
+	top:1px;
+    }
+
+    
+    </style>
+</head>
+<body class="flat-blue">
+    <div class="app-container">
+        <div class="row content-container">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-top">
+                <div class="container-fluid">
+                    <div class="">
+                        <button type="button" class="navbar-expand-toggle">
+                            <i class="fa fa-bars icon"></i>
+                        </button>
+                        @RenderSection("Breadcrumbs", false)
+                        <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
+                            <i class="fa fa-th icon"></i>
+                        </button>
+                    </div>                   
+                </div>
+            </nav>
+            <div class="side-menu sidebar-inverse">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="side-menu-container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                <div class="icon fa fa-paper-plane"></div>
+                                <div class="title">IoT Lab</div>
+                            </a>
+                            <button type="button" class="navbar-expand-toggle pull-right visible-xs">
+                                <i class="fa fa-times icon"></i>
+                            </button>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            @{
+                                var className = Request.Path == "/" && Request.QueryString.Count == 0 ? "active" : "";
+                            }
+                            <li class="@className">
+                                <a href="/">
+                                    <span class="icon fa fa-home"></span><span class="title">Home</span>
+                                </a>
+                            </li>
+                            @Html.Action("Reports", "Dashboard")
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </nav>
+            </div>
+            <!-- Main Content -->
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <!-- Javascript Libs -->
+    <script type="text/javascript" src="/lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/js/Chart.min.js"></script>
+    <script type="text/javascript" src="/lib/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="/lib/js/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="/lib/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/lib/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="/lib/js/es6-promise.auto.min.js"></script>
+    <script type="text/javascript" src="/lib/js/ace/ace.js"></script>
+    <script type="text/javascript" src="/lib/js/ace/mode-html.js"></script>
+    <script type="text/javascript" src="/lib/js/ace/theme-github.js"></script>
+    <!-- Javascript -->
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script src="~/Scripts/powerbi.js"></script>
+    @RenderSection("PageScripts", false)
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="/lib/js/bootstrap.min2.js"></script>
+        <!-- FastClick -->
+        <script type="text/javascript" src="/lib/js/fastclick.js"></script>
+        <!-- NProgress -->
+        <script type="text/javascript" src="/lib/js/nprogress.js"></script>
+        <!-- Chart.js -->
+        <script type="text/javascript" src="/lib/js/Chart.min2.js"></script>
+        <!-- jQuery Sparklines -->
+        <script type="text/javascript" src="/lib/js/jquery.sparkline.min.js"></script>
+        <!-- morris.js -->
+        <script type="text/javascript" src="/lib/js/raphael.min.js"></script>
+        <script type="text/javascript" src="/lib/js/morris.min.js"></script>
+        <!-- gauge.js -->
+        <script type="text/javascript" src="/lib/js/gauge.min.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script type="text/javascript" src="/lib/js/bootstrap-progressbar.min.js"></script>
+        <!-- Flot -->
+        <script type="text/javascript" src="/lib/js/jquery.flot.js"></script>
+        <script type="text/javascript" src="/lib/js/jquery.flot.pie.js"></script>
+        <script type="text/javascript" src="/lib/js/jquery.flot.time.js"></script>
+        <script type="text/javascript" src="/lib/js/jquery.flot.stack.js"></script>
+        <script type="text/javascript" src="/lib/js/jquery.flot.resize.js"></script>
+        <!-- Flot plugins -->
+        <script type="text/javascript" src="/lib/js/jquery.flot.orderBars.js"></script>
+        <script type="text/javascript" src="/lib/js/jquery.flot.spline.min.js"></script>
+        <script type="text/javascript" src="/lib/js/curvedLines.js"></script>
+        <!-- DateJS -->
+        <script type="text/javascript" src="/lib/js/date.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script type="text/javascript" src="/lib/js/custom.min.js"></script>
+        <!-- Flot -->
+        <!--Reference the SignalR library. -->
+        <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+        <!--Reference the autogenerated SignalR hub script. -->
+        <script src="~/signalr/hubs"></script>
+    <script>
+        var chat;
+        $(document).ready(function () {
+            
+            // Reference the auto-generated proxy for the hub.
+            chat = $.connection.telemetryHub;
+            $.connection.hub.start().done(function () {
+                chat.server.hello();
+            });            
+            var d1 = [];
+            var d2 = [];
+            var d3 = [];
+            var d4 = [];
+            var linuxWarningCount = 0;
+            var winWarningCount = 0;
+            var winDevicePower = [];
+            var linuxDevicePower = [];
+            var depreciationTrans;
+            var powerTrans;
+
+            // Create a function that the hub can call back to display messages.
+            chat.client.sendTelemetry = function (deviceId, msgId, speed, depreciation, power, timestamp) {
+                if (d1.length > 20) {
+                    d1.splice(0, 1);
+                }
+                if (d2.length > 20) {
+                    d2.splice(0, 1);
+                }
+                if (d3.length > 20) {
+                    d3.splice(0, 1);
+                }
+                if (d4.length > 20) {
+                    d4.splice(0, 1);
+                }
+                if (winDevicePower.length > 20) {
+                    winDevicePower.splice(0, 1);
+                }
+                if (linuxDevicePower.length > 20) {
+                    linuxDevicePower.splice(0, 1);
+                }
+
+                var css = "width:" + depreciation*100 + "%";
+                if (deviceId == "LinuxTurbine") {
+                    d1.push([timestamp, speed]);
+                    d3.push([linuxWarningCount]);
+                    powerTrans = power | 0;
+                    depreciationTrans = parseFloat(depreciation).toFixed(2);
+                    document.getElementById("LinuxPower").innerHTML = powerTrans;
+                    document.getElementById("linuxDepriciation").innerHTML = depreciationTrans;
+                    document.getElementById('linuxDepriciationBar').setAttribute("style", css);
+                    linuxDevicePower.push(powerTrans);
+                    if (depreciationTrans < document.getElementById('fader2').value) {
+                        document.getElementById('linuxDepriciationBar').className = "progress-bar progress-bar-danger";
+                    }
+                    else {
+                        document.getElementById('linuxDepriciationBar').className = "progress-bar bg-green";
+                    }
+                    if ((depreciationTrans < document.getElementById('fader2').value)
+                        || (speed > document.getElementById('fader').value)) {
+                        linuxWarningCount++;
+                        document.getElementById('LinuxWarning').innerHTML = linuxWarningCount;
+                    }
+                    
+                }
+                else {
+
+                    d2.push([timestamp, speed]);
+                    document.getElementById("WinPower").innerHTML = power;
+                    document.getElementById("winDepriciation").innerHTML = depreciation;
+                    document.getElementById('winDepriciationBar').setAttribute("style", css);
+                    winDevicePower.push(power);
+                    if (depreciation < document.getElementById('fader2').value) {
+                        document.getElementById('winDepriciationBar').className = "progress-bar progress-bar-danger";
+                    }
+                    else {
+                        document.getElementById('winDepriciationBar').className = "progress-bar bg-green";
+                    }
+                    if ((depreciation < document.getElementById('fader2').value)
+                        || (speed > document.getElementById('fader').value)) {
+                        winWarningCount++;
+                        document.getElementById('WinWarning').innerHTML = winWarningCount;
+                    }
+                    d4.push([winWarningCount]);
+                }
+
+                //flot options
+                var options = {
+                    series: {
+                        curvedLines: {
+                            apply: true,
+                            active: true,
+                            monotonicFit: true
+                        }
+                    },
+                    colors: ["#26B99A"],
+                    grid: {
+                        borderWidth: {
+                            top: 0,
+                            right: 0,
+                            bottom: 1,
+                            left: 1
+                        },
+                        borderColor: {
+                            bottom: "#7F8790",
+                            left: "#7F8790"
+                        }
+                    },
+                    xaxis: {
+                        mode: "time",
+                        timeformat: "%H:%M:%S"
+                    }
+                    
+                };
+
+                var plot = $.plot($("#placeholder3xx3"), [{
+                    label: "LinuxTurbine",
+                    data: d1,
+                    color: "#9c1abc",
+                    lines: {
+                        fillColor: "rgba(150, 202, 89, 0.12)"
+                    },
+                    points: {
+                        fillColor: "#fff"
+                    }
+                }, {
+                    label: "WinTurbine",
+                    data: d2,
+                    color: "rgba(36, 146, 183, 1)",
+                    lines: {
+                        fillColor: "rgba(36, 146, 183, 1)"
+                    },
+                    points: {
+                        fillColor: "#fff"
+                    }
+                }], options);
+
+                $(".sparkline_one").sparkline(
+                linuxDevicePower, {
+                    type: 'line',
+                    width: '200',
+                    height: '40',
+                    lineColor: '#2F49BD',
+                    fillColor: 'rgba(223, 223, 223, 0.57)',
+                    lineWidth: 2,
+                    spotColor: '#2F49BD',
+                    minSpotColor: '#2F49BD'
+                });
+
+                $(".sparkline_two").sparkline(
+                winDevicePower, {
+                    type: 'line',
+                    width: '200',
+                    height: '40',
+                    lineColor: '#2F49BD',
+                    fillColor: 'rgba(223, 223, 223, 0.57)',
+                    lineWidth: 2,
+                    spotColor: '#2F49BD',
+                    minSpotColor: '#2F49BD'
+                });
+
+                $(".sparkline_three").sparkline(
+                d3, {
+                    type: 'bar',
+                    height: '40',
+                    barWidth: 9,
+                    barSpacing: 2,
+                    barColor: '#ff6daa'
+                });
+
+                $(".sparkline_four").sparkline(
+                d4, {
+                    type: 'bar',
+                    height: '40',
+                    barWidth: 9,
+                    barSpacing: 2,
+                    barColor: '#ff6daa'
+                });
+            };        
+            
+      });
+    </script>
+    <!-- /Flot -->
+</body>
+</html>

@@ -20,14 +20,7 @@ And some useful libraries:
 
 ## Training Materials
 
-All documents are available for download now.
-
-* [IoT Jumpstart Workshop in Jan 2017](https://aka.ms/iot-workshop-jan2017)
-* [IoT Jumpstart Workshop in Mar 2017](https://aka.ms/iot-workshop-mar2017)
-* [IoT Jumpstart Workshop in Apr 2017](https://aka.ms/iot-workshop-april2017)
-* [IoT Jumpstart Workshop in Jul 2017](https://aka.ms/iot-workshop-july2017)
-* [IoT Jumpstart Workshop in Aug 2017](https://aka.ms/iot-workshop-aug2017)
-
+All slide decks and hands-on documents are located on TrainingMaterials folder.
 
 ### Azure online resources
 
